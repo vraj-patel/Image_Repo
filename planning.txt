@@ -1,0 +1,13 @@
+
+API Endpoints
+
+/search/<text>
+/search {image: img}
+/upload/
+
+Image Model:
+- id: int
+- user_id: string
+- link: string
+- captions: [string]
+
