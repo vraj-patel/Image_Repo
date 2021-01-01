@@ -164,8 +164,6 @@ model = define_model(vocab_size, max_length)
 epochs = 20
 steps = len(train_descriptions)
 
-print('-----------heyyyy')
-
 for i in range(epochs):
 	# create the data generator
 	generator = data_generator(train_descriptions, train_features, tokenizer, max_length, vocab_size)

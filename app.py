@@ -6,16 +6,12 @@ import image_search as Image_Search
 import os
 import zipfile
 
-# Init app
 app = Flask(__name__)
-basedir = os.path.abspath(os.path.dirname(__file__))
-# Database
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(basedir, 'db.sqlite')
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-# Init db
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://scott:tiger@localhost/Image_Repo')
 db = SQLAlchemy(app)
-# Init ma
-ma = Marshmallow(app)
+
+class Image(db.Model):
+  id = db.Column('id', db.Integer, primary_key=True)
 
 @app.route('/text_search', methods=['POST'])
 def text_search():
@@ -43,7 +39,6 @@ def upload_image():
   image_file = request.files['image_file']
   image_file.save('./myimage.jpg')
   return jsonify({"message": 'success'})
-
 
 if __name__ == '__main__':
   app.run(debug=True)

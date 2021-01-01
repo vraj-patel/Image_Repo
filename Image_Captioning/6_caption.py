@@ -59,14 +59,17 @@ def generate_desc(model, tokenizer, photo, max_length):
 			break
 	return in_text
 
-# load the tokenizer
-tokenizer = load(open('tokenizer.pkl', 'rb'))
-# pre-define the max sequence length (from training)
-max_length = 34
-# load the model
-model = load_model('../final_ml_models/model_5.h5')
-# load and prepare the photograph
-photo = extract_features('image.jpg')
-# generate description
-description = generate_desc(model, tokenizer, photo, max_length)
-print(description)
+def get_caption(image_path):
+	# load the tokenizer
+	tokenizer = load(open('tokenizer.pkl', 'rb'))
+	# pre-define the max sequence length (from training)
+	max_length = 34
+	# load the model
+	model = load_model('../final_ml_models/model_5.h5')
+	# load and prepare the photograph
+	photo = extract_features('image.jpg')
+	# generate description
+	description = generate_desc(model, tokenizer, photo, max_length)
+	description.replace('startseq', '')
+	description.replace('endseq', '')
+	return description
