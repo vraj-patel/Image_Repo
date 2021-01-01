@@ -1,6 +1,6 @@
 import numpy as np
 from PIL import Image
-from Image_Repo.feature_extractor import FeatureExtractor
+from Upload_Folder.feature_extractor import FeatureExtractor
 from datetime import datetime
 from flask import Flask, request, render_template
 from pathlib import Path
@@ -12,9 +12,9 @@ def search(search_img_path):
     fe = FeatureExtractor()
     features = []
     img_paths = []
-    for feature_path in Path("./Image_Repo/image_features").glob("*.npy"):
+    for feature_path in Path("./Upload_Folder/image_features").glob("*.npy"):
         features.append(np.load(feature_path))
-        img_paths.append(Path("./Image_Repo/images") / (feature_path.stem + ".jpg"))
+        img_paths.append(Path("./Upload_Folder/images") / (feature_path.stem + ".jpg"))
     features = np.array(features)
 
     # Save query image

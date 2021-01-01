@@ -1,0 +1,10 @@
+[
+    {
+        "subject": "snow",
+        "subject_colour": "white"
+    },
+    {
+        "subject": "dog",
+        "subject_colour": ["black", "brown", "white"]
+    }
+]

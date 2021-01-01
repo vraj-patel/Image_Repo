@@ -7,7 +7,7 @@ def search(search_text):
 
     results = {}
 
-    with open('./Image_Repo/descriptions.txt', 'r') as file:
+    with open('./Upload_Folder/descriptions.txt', 'r') as file:
         for line in file:
             line = line.split()
             image_path = line[0] + '.jpg'
@@ -29,6 +29,6 @@ def search(search_text):
         os.remove(os.path.join('Search_Results', f))
 
     for file_name in top_results:
-        shutil.copyfile('./Image_Repo/images/'+file_name, './Search_Results/'+file_name)
+        shutil.copyfile('./Upload_Folder/images/'+file_name, './Search_Results/'+file_name)
     
     return top_results
