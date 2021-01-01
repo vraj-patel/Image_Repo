@@ -1,9 +1,8 @@
 
 API Endpoints
 
-/search/<text>
-/search {image: img}
-/upload/
+post /search {image: img, text: txt}
+post /upload
 
 Image Model:
 - id: int
