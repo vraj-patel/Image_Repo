@@ -8,7 +8,7 @@ import os
 import shutil
 
 def search(search_img_path):
-    # Read image features
+
     fe = FeatureExtractor()
     features = []
     img_paths = []
@@ -17,13 +17,11 @@ def search(search_img_path):
         img_paths.append(Path("./Upload_Folder/images") / (feature_path.stem + ".jpg"))
     features = np.array(features)
 
-    # Save query image
-    img = Image.open(search_img_path)  # PIL image
+    img = Image.open(search_img_path)
 
-    # Run search
     query = fe.extract(img)
-    dists = np.linalg.norm(features-query, axis=1)  # L2 distances to features
-    ids = np.argsort(dists)[:10]  # Top 30 results
+    dists = np.linalg.norm(features-query, axis=1) 
+    ids = np.argsort(dists)[:10]  
     scores = [(dists[id], img_paths[id]) for id in ids]
 
     for f in os.listdir('Search_Results'):

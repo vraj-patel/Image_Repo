@@ -1,10 +1,11 @@
 [
     {
         "subject": "snow",
-        "subject_colour": "white"
+        "subject_colours":["white"]
     },
     {
         "subject": "dog",
-        "subject_colour": ["black", "brown", "white"]
+        "subject_colours": ["black", "brown", "white"],
+        "subject_actions": ["sitting"]
     }
 ]

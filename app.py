@@ -1,6 +1,5 @@
 from flask import Flask, request, jsonify, render_template, send_from_directory
 from flask_sqlalchemy import SQLAlchemy 
-from flask_marshmallow import Marshmallow 
 import text_search as Text_Search
 import image_search as Image_Search
 import os
@@ -22,11 +21,21 @@ Uploading file details
 """
 
 app = Flask(__name__)
-# app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://scott:tiger@localhost/Image_Repo')
-# db = SQLAlchemy(app)
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///image_repo.db'
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+db = SQLAlchemy(app)
 
-# class Image(db.Model):
-#   id = db.Column('id', db.Integer, primary_key=True)
+class Captions(db.Model):
+  id = db.Column(db.Integer, primary_key=True)
+  image_id = db.Column('image_id', db.String)
+  caption = db.Column('caption', db.String)
+
+class Characteristics(db.Model):
+  id = db.Column(db.Integer, primary_key=True)
+  image_id = db.Column('image_id', db.String, nullable=False)
+  subject = db.Column('subject', db.String, nullable=False)
+  subject_colours = db.Column('subject_colours', db.String, nullable=True)
+  subject_actions = db.Column('subject_actions', db.String, nullable=True)
 
 @app.route('/text_search', methods=['POST'])
 def text_search():
@@ -56,6 +65,19 @@ def upload_image():
   characteristics = json.loads(request.form['characteristics'])
   filename = secure_filename(str(uuid.uuid4())+'.jpg')
   image_file.save('./Upload_Folder/images/' + filename)
+
+  if provided_caption:
+    caption = Captions(image_id=filename, caption=provided_caption)
+    db.session.add(caption)
+    db.session.commit()
+  
+  if len(characteristics):
+    for char in characteristics:
+      colours = " ".join(char['subject_colours']) if 'subject_colours' in char else ""
+      actions = " ".join(char['subject_actions']) if 'subject_actions' in char else ""
+      db_char = Characteristics(image_id=filename, subject=char['subject'], subject_colours=colours, subject_actions=actions)
+      db.session.add(db_char)
+      db.session.commit()
 
   return jsonify({"message": 'Successfully uploaded image'})
 
