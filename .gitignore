@@ -7,3 +7,5 @@ Upload_Folder/images/*
 Search_Results/*
 
 __pycache__/
+
+.vscode/
