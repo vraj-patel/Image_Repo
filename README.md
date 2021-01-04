@@ -1,6 +1,11 @@
 # Image_Repo
 
-This image repository project, created with **Python**, **Flask** and **SQL**, provides endpoints to search for images by text, characteristics and by another image. It also provides an endpoint to upload images to add to the repository.
+This image repository project, created with **Python**, **Flask** and **SQL**, provides endpoints to:
+
+- search image by text
+- search image by characteristics
+- search image by another image
+- upload image
 
 To perform image search, **Machine Learning**, **Deep Learning**, and **NLP** techniques are used (explained below).
 
@@ -10,7 +15,7 @@ To run the project or to run the machine learning tasks, follow the steps listed
 
 ## Machine Learning and Generating Captions
 
-When uploading an image, if a caption (description of the image) is not passed as form-data, the /Image_Captioning directory will automatically generate a caption. This way, if no caption is provided, this repo can still perform text based search.
+When uploading an image, if a caption (description of the image) is not passed as form-data, the `/Image_Captioning` directory will automatically generate a caption. This way, if no caption is provided, this repo can still perform text based search.
 
 This is done by using a Convolutional Neural Network (CNN) to extract and encode features from the image, as commonly done by other computer vision projects, and uses a Recurrent Neural Network (RNN) to decode features to form a description of the image. VGG16 is a pre-trained CNN based model used to encode the features. A RNN is trained to greedily generate a sequence of words to form the caption. Inspiration for this (sub)project was taken from Jason Brownlee's blog post on image captioning.
 
@@ -29,5 +34,5 @@ Since training a RNN is a cumbersome and memory intensive process, the tokenizer
 
 ## Steps to Train an Image Captioning Model
 
-1. Download the flickr8k dataset (using the form provided above) and place all images in /Image_Captioning/Flicker8k_Dataset. Place all the .txt files provided with the dataset in Flickr8k_text.
+1. Download the flickr8k dataset (using the form provided above) and place all images in `/Image_Captioning/Flicker8k_Dataset`. Place all the .txt files provided with the dataset in Flickr8k_text.
 2. Run all python files in /Image\*Captioning in order ("1*.py", "2*.py", ...) to generate 20 models (1 for each epoch) and choose the one which produces the least loss as your final model. Place the final model in `/final_ml_models`.
