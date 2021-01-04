@@ -1,8 +1,8 @@
 # Image_Repo
 
-This image repository project, created with Python, Flask and SQL, provides endpoints to search for images by text, characteristics and by another image. It also provides an endpoint to upload images to add to the repository.
+This image repository project, created with **Python**, **Flask** and **SQL**, provides endpoints to search for images by text, characteristics and by another image. It also provides an endpoint to upload images to add to the repository.
 
-To perform image search, Machine Learning, Deep Learning, and NLP techniques are used (explained below).
+To perform image search, **Machine Learning**, **Deep Learning**, and **NLP** techniques are used (explained below).
 
 The Flicker8k image captioning dataset was used to train the deep learning models. The dataset is too large to be included and I do not own this data. Fill out the following form to download the dataset: [Form](https://forms.illinois.edu/sec/1713398).
 
