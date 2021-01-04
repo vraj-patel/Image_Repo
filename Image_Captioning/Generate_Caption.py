@@ -70,6 +70,6 @@ def get_caption(image_path):
 	photo = extract_features(image_path)
 	# generate description
 	description = generate_desc(model, tokenizer, photo, max_length)
-	description.replace('startseq', '')
-	description.replace('endseq', '')
+	description = description.replace('startseq', '')
+	description = description.replace('endseq', '')
 	return description
