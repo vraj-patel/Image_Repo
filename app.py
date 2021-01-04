@@ -8,6 +8,7 @@ import uuid
 from werkzeug.utils import secure_filename
 import json
 import Upload_Folder.extract_features as Extract_Features
+import Image_Captioning.Generate_Caption as Caption_Generator
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///image_repo.db'
@@ -50,8 +51,8 @@ def image_search():
 @app.route('/upload', methods=['POST'])
 def upload_image():
   image_file = request.files['image_file']
-  provided_caption = request.form['caption']
-  characteristics = json.loads(request.form['characteristics'])
+  provided_caption = request.form['caption'] if 'caption' in request.form else False
+  characteristics = json.loads(request.form['characteristics']) if 'characteristics' in request.form else []
   filename_uuid = secure_filename(str(uuid.uuid4()))
   image_file.save('./Upload_Folder/images/' + filename_uuid + '.jpg')
   Extract_Features.extract('./Upload_Folder/images/', filename_uuid + '.jpg', './Upload_Folder/image_features/')
@@ -61,7 +62,14 @@ def upload_image():
     caption = Captions(image_id=filename_uuid, caption=provided_caption)
     db.session.add(caption)
     db.session.commit()
-  
+  else:
+    gen_caption = Caption_Generator.get_caption('./Upload_Folder/images/'+ filename_uuid + '.jpg')
+    with open("./Upload_Folder/descriptions.txt", "a") as image_captions_file:
+      image_captions_file.write("\n" + filename_uuid + ' ' + gen_caption)
+    caption = Captions(image_id=filename_uuid, caption=gen_caption)
+    db.session.add(caption)
+    db.session.commit()
+    
   if len(characteristics):
     for char in characteristics:
       colours = " ".join(char['subject_colours']) if 'subject_colours' in char else ""

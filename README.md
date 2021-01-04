@@ -24,14 +24,14 @@ Since training a RNN is a cumbersome and memory intensive process, the tokenizer
 ## Steps to Run this Project
 
 1. Create folders named `image_features` and `images` in `/Upload_Folder`
-1. Make sure you have installed and are using python3 and pip3
-1. Install pipenv: `pip3 install pipenv`
-1. Start pipenv shell: `pipenv shell`
-1. Install all required packages as listed in Pipfile: `pipenv install`
-1. In the pipenv shell, start app.py: `python3 app.py`
-1. Either use the `/upload` endpoint OR manually upload images in the /Upload_Folder/images directory, along with a descriptions.txt file with image filenames and captions/descriptions as shown in `/Upload_Folder/descriptions.txt`
-1. If you manually inserted the images, run `/Upload_Folder/extract_all.py`
-1. Start hitting the endpoints!
+2. Make sure you have installed and are using python3 and pip3
+3. Install pipenv: `pip3 install pipenv`
+4. Start pipenv shell: `pipenv shell`
+5. Install all required packages as listed in Pipfile: `pipenv install`
+6. In the pipenv shell, start app.py: `python3 app.py`
+7. Either use the `/upload` endpoint OR manually upload images in the `/Upload_Folder/images` directory, along with a descriptions.txt file with image filenames and captions/descriptions as shown in `/Upload_Folder/descriptions.txt`
+8. If you manually inserted the images, open a separate terminal, `cd Upload_Folder`, and run `python3 extract_all.py`
+9. Start hitting the endpoints! The search results will be returned as a zip file (response) and also saved to the `/Search_Results` directory
 
 ## Steps to Train an Image Captioning Model
 
