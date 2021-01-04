@@ -7,18 +7,7 @@ import zipfile
 import uuid
 from werkzeug.utils import secure_filename
 import json
-
-"""
-Storage Locations:
-- images: file system
-- captions: database (id is filename, caption)
-- characteristics: database (image_path (id), subject name, subject color, subject action)
-- pkl feature files: file
-
-Uploading file details
-- send file, description(optional), array of characteristics(optional)
-
-"""
+import Upload_Folder.extract_features as Extract_Features
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///image_repo.db'
@@ -50,8 +39,8 @@ def text_search():
 @app.route('/image_search', methods=['POST'])
 def image_search():
   image_file = request.files['image_query']
-  image_file.save('./uploaded_image.jpg')
-  all_files = Image_Search.search('uploaded_image.jpg')
+  image_file.save('./image_query.jpg')
+  all_files = Image_Search.search('image_query.jpg')
   zipped = zipfile.ZipFile('./Search_Results/image_search_results.zip', 'w')
   for file in all_files:
     zipped.write('Search_Results/'+file)
@@ -63,11 +52,13 @@ def upload_image():
   image_file = request.files['image_file']
   provided_caption = request.form['caption']
   characteristics = json.loads(request.form['characteristics'])
-  filename = secure_filename(str(uuid.uuid4())+'.jpg')
-  image_file.save('./Upload_Folder/images/' + filename)
-
+  filename_uuid = secure_filename(str(uuid.uuid4()))
+  image_file.save('./Upload_Folder/images/' + filename_uuid + '.jpg')
+  Extract_Features.extract('./Upload_Folder/images/', filename_uuid + '.jpg', './Upload_Folder/image_features/')
   if provided_caption:
-    caption = Captions(image_id=filename, caption=provided_caption)
+    with open("./Upload_Folder/descriptions.txt", "a") as image_captions_file:
+      image_captions_file.write("\n" + filename_uuid + ' ' + provided_caption)
+    caption = Captions(image_id=filename_uuid, caption=provided_caption)
     db.session.add(caption)
     db.session.commit()
   
@@ -75,7 +66,7 @@ def upload_image():
     for char in characteristics:
       colours = " ".join(char['subject_colours']) if 'subject_colours' in char else ""
       actions = " ".join(char['subject_actions']) if 'subject_actions' in char else ""
-      db_char = Characteristics(image_id=filename, subject=char['subject'], subject_colours=colours, subject_actions=actions)
+      db_char = Characteristics(image_id=filename_uuid, subject=char['subject'], subject_colours=colours, subject_actions=actions)
       db.session.add(db_char)
       db.session.commit()
 

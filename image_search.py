@@ -8,7 +8,6 @@ import os
 import shutil
 
 def search(search_img_path):
-
     fe = FeatureExtractor()
     features = []
     img_paths = []
