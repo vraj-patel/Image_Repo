@@ -17,7 +17,7 @@ To run the project or to run the machine learning tasks, follow the steps listed
 
 When uploading an image, if a caption (description of the image) is not passed as form-data, the `/Image_Captioning` directory will automatically generate a caption. This way, if no caption is provided, this repo can still perform text based search.
 
-This is done by using a Convolutional Neural Network (CNN) to extract and encode features from the image, as commonly done by other computer vision projects, and uses a Recurrent Neural Network (RNN) to decode features to form a description of the image. VGG16 is a pre-trained CNN based model used to encode the features. A RNN is trained to greedily generate a sequence of words to form the caption. Inspiration for this (sub)project was taken from Jason Brownlee's blog post on image captioning.
+This is done by using a Convolutional Neural Network (CNN) to extract and encode features from the image, as commonly done by other computer vision projects, and uses a Recurrent Neural Network (RNN) to decode features to form a description of the image. VGG16 is a pre-trained CNN based model used to encode the features. A RNN is trained to greedily generate a sequence of words to form the caption. This sub)project was taken from Jason Brownlee's blog post on image captioning.
 
 Since training a RNN is a cumbersome and memory intensive process, the tokenizer and extracted features file are provided in the `/Image_Captioning` directory. Optimized model(s) are provided in `/final_ml_models`.
 
