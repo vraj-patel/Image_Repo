@@ -37,3 +37,11 @@ Since training a RNN is a cumbersome and memory intensive process, the tokenizer
 
 1. Download the flickr8k dataset (using the form provided above) and place all images in `/Image_Captioning/Flicker8k_Dataset`. Place all the .txt files provided with the dataset in Flickr8k_text.
 2. Run all python files in /Image\*Captioning in order ("1*.py", "2*.py", ...) to generate 20 models (1 for each epoch) and choose the one which produces the least loss as your final model. Place the final model in `/final_ml_models`.
+
+## Endpoints
+
+`POST /image_search`: Request must include an image file query for search.
+
+`POST /text_search`: Request must include text query for search.
+
+`POST /upload`: Request must include an image file which will be added to the repository. Adding captions and characteristics for better search results is optional.
